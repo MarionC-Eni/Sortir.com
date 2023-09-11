@@ -9,7 +9,7 @@ use Faker;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
-class AppFixtures extends Fixture
+class UserFixtures extends Fixture
 
 {
     private UserPasswordHasherInterface $hasher;
@@ -26,23 +26,24 @@ class AppFixtures extends Fixture
 
         $faker = Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 10; $i++) {
         $user = new User();
-        // $user->setIdUser($faker->1);
+        $user->setIdUser($faker->numberBetween(1, 1000));
         $user->setPseudo($faker->firstName());
         $user->setName($faker->lastName());
         $user->setFirstname($faker->firstName());
         $user->setPhone($faker->phoneNumber());
         $user->setEmail($faker->email());
-        // $user->setIsAdmin($faker->false);
+        $user->setIsAdmin($faker->boolean);
         $user->setPassword($faker->password);
-        // $user->setIsRegisteredToEvent($faker->true);
+        $user->setIsRegisteredToEvent($faker->boolean);
 
-        $user->setRoles( ["ROLE_USER"] );
+        //$user->setRoles( ["ROLE_USER"] );
 
         $sPlainPassword = "azerty123";
+        // $user->setPassword($PlainPassword);
 
-        $hash = $this->hasher->hashPassword($user, $sPlainPassword);
+         $hash = $this->hasher->hashPassword($user, $sPlainPassword);
         $user->setPassword($hash);
 
         // On persiste

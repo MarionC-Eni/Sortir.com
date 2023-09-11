@@ -27,8 +27,8 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[ORM\Column(length: 100)]
     private ?string $firstname = null;
 
-    #[ORM\Column]
-    private ?int $phone = null;
+    #[ORM\Column(length: 100)]
+    private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -47,10 +47,6 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $photo = null;
-
-    #[ORM\Column]
-    private array $roles = [];
-
 
     public function getId(): ?int
     {
@@ -98,7 +94,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this->phone;
     }
 
-    public function setPhone(int $phone): static
+    public function setPhone(string $phone): static
     {
         $this->phone = $phone;
 
