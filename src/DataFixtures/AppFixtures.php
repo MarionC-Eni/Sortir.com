@@ -5,24 +5,47 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use Faker;
 
 class AppFixtures extends Fixture
+
 {
+    private UserPasswordHasherInterface $hasher;
+    // ou bien sans typage (moins bien) :
+    // private $hasher
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
+
+        $faker = Faker\Factory::create('fr_FR');
+
+        for ($i = 0; $i < 20; $i++) {
         $user = new User();
-        $user->setIdUser(1);
-        $user->setPseudo("pseudo");
-        $user->setName("name");
-        $user->setFirstname("firstname");
-        $user->setPhone(123456789);
-        $user->setEmail("email");
-        $user->setIsAdmin(false);
-        $user->setPassword("password");
-        $user->setIsRegisteredToEvent(true);
+        // $user->setIdUser($faker->1);
+        $user->setPseudo($faker->firstName());
+        $user->setName($faker->lastName());
+        $user->setFirstname($faker->firstName());
+        $user->setPhone($faker->mobileNumber());
+        $user->setEmail($faker->email());
+        $user->setIsAdmin($faker->false);
+        $user->setPassword($faker->password);
+        $user->setIsRegisteredToEvent($faker->true);
 
+        $user->setRoles( ["ROLE_USER"] );
+
+        $sPlainPassword = "azerty123";
+
+        $hash = $this->hasher->hashPassword($user, $sPlainPassword);
+        $user->setPassword($hash);
+
+        // On persiste
         $manager->persist($user);
-
-        $manager->flush();
     }
+        $manager->flush();
+}
 }
