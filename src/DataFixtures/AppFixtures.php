@@ -6,6 +6,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Faker;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class AppFixtures extends Fixture
 
@@ -30,11 +32,11 @@ class AppFixtures extends Fixture
         $user->setPseudo($faker->firstName());
         $user->setName($faker->lastName());
         $user->setFirstname($faker->firstName());
-        $user->setPhone($faker->mobileNumber());
+        $user->setPhone($faker->phoneNumber());
         $user->setEmail($faker->email());
-        $user->setIsAdmin($faker->false);
+        // $user->setIsAdmin($faker->false);
         $user->setPassword($faker->password);
-        $user->setIsRegisteredToEvent($faker->true);
+        // $user->setIsRegisteredToEvent($faker->true);
 
         $user->setRoles( ["ROLE_USER"] );
 
