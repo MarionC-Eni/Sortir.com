@@ -8,6 +8,7 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+.composer.json
 
 ###> phpunit/phpunit ###
 /phpunit.xml
