@@ -19,7 +19,7 @@ class EventFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
         $event = new Event();
         $event->setIdEvent($faker->numberBetween(1, 1000));
-        $event->setName($faker->words());
+        $event->setName($faker->word());
         $event->setDateHourStart($faker->dateTime());
 
             $durationHours = $faker->numberBetween(0, 23);
