@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,10 +23,11 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('idUser')
             ->add('pseudo', TextType::class, ['label' => 'Pseudo : '])
             ->add('name', TextType::class, ['label' => 'Nom : '])
             ->add('firstname', TextType::class, ['label' => 'Prénom : '])
-            ->add('phone', IntegerType::class, ['label' => 'Téléphone : '])
+            ->add('phone', TextType::class, ['label' => 'Téléphone : '])
             ->add('email', EmailType::class, ['label' => 'Email : '])
             ->add('password', PasswordType::class, ['label' => 'Mot de passe : '])
             ->add('photo', FileType::class, ['label' => 'Photo : '])
