@@ -43,7 +43,7 @@ class UserFixtures extends Fixture
         $sPlainPassword = "azerty123";
         // $user->setPassword($PlainPassword);
 
-         $hash = $this->hasher->hashPassword($user, $sPlainPassword);
+        $hash = $this->hasher->hashPassword($user, $sPlainPassword);
         $user->setPassword($hash);
 
         // On persiste
