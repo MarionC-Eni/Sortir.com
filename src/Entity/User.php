@@ -203,7 +203,9 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     public function getUserIdentifier(): string
     {
         // TODO: Implement getUserIdentifier() method.
-        return $this->userIdentifier;
+        if (!empty($this->userIdentifier)) {
+            return $this->userIdentifier;
+        }
     }
 
     public function getSchoolsite(): ?Campus
