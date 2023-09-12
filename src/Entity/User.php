@@ -18,16 +18,20 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    // MC: ajout de generatedValue
+    // MC: en fait cette proriété est un doublon de id. DONC supprimer cette colonne de la BDD
+   //  #[ORM\Column]
+    // #[ORM\GeneratedValue(strategy: 'AUTO', nullable: true)] // Ou 'AUTO', 'IDENTITY', etc., selon la stratégie de génération appropriée
+    #[ORM\Column(nullable: true)]
     private ?int $idUser = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $name = null;
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $username = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
@@ -42,16 +46,19 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private ?bool $isRegisteredToEvent = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $pseudo = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Campus $schoolsite = null;
-    private $userIdentifier;
+    //private $userIdentifier;
+
+    #[ORM\Column]
+    private array $roles = [];
 
     public function getId(): ?int
     {
@@ -70,17 +77,30 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this;
     }
 
-    public function getName(): ?string
+    // je change le nom de ma propriété name
+    public function getUsername(): ?string
     {
-        return $this->name;
+        return $this->username;
     }
 
-    public function setName(string $name): static
+    public function setUsername(string $username): static
     {
-        $this->name = $name;
+        $this->username = $username;
 
         return $this;
     }
+
+//    public function getName(): ?string
+//    {
+//        return $this->name;
+//    }
+//
+//    public function setName(string $name): static
+//    {
+//        $this->name = $name;
+//
+//        return $this;
+//    }
 
     public function getFirstname(): ?string
     {
@@ -202,8 +222,9 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function getUserIdentifier(): string
     {
-        // TODO: Implement getUserIdentifier() method.
-        return $this->userIdentifier;
+        //    return $this->userIdentifier;
+        return (string) $this->email;
+
     }
 
     public function getSchoolsite(): ?Campus

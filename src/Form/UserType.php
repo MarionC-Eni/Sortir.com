@@ -25,7 +25,8 @@ class UserType extends AbstractType
         $builder
             ->add('idUser')
             ->add('pseudo', TextType::class, ['label' => 'Pseudo : '])
-            ->add('name', TextType::class, ['label' => 'Nom : '])
+            // attention name renommé username
+            ->add('username', TextType::class, ['label' => 'Nom : '])
             ->add('firstname', TextType::class, ['label' => 'Prénom : '])
             ->add('phone', TextType::class, ['label' => 'Téléphone : '])
             ->add('email', EmailType::class, ['label' => 'Email : '])
