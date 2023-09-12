@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< Updated upstream
     "content-hash": "8fe321587eef9ca35f9056f0101ebbbb",
-=======
-    "content-hash": "d8be03eb46257cfbb5a65de4c00439a1",
->>>>>>> Stashed changes
     "packages": [
         {
             "name": "doctrine/cache",

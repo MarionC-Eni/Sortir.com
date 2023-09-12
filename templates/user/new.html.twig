@@ -1,13 +1,7 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}New User{% endblock %}
-
 {% block body %}
-<div class="container">
     <h1>nouvelle utilisateur</h1>
-
     {{ include('user/_form.html.twig') }}
-
     <a href="{{ path('app_home') }}">Retour menu principal</a>
-    </div>
 {% endblock %}
