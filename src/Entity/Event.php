@@ -38,6 +38,9 @@ class Event
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $ReasonCancellation = null;
 
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?Campus $schoolsite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Event
     public function setReasonCancellation(?string $ReasonCancellation): static
     {
         $this->ReasonCancellation = $ReasonCancellation;
+
+        return $this;
+    }
+
+    public function getSchoolsite(): ?Campus
+    {
+        return $this->schoolsite;
+    }
+
+    public function setSchoolsite(?Campus $schoolsite): static
+    {
+        $this->schoolsite = $schoolsite;
 
         return $this;
     }

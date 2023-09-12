@@ -48,6 +48,11 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $photo = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campus $schoolsite = null;
+    private $userIdentifier;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -199,6 +204,18 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     {
         // TODO: Implement getUserIdentifier() method.
         return $this->userIdentifier;
+    }
+
+    public function getSchoolsite(): ?Campus
+    {
+        return $this->schoolsite;
+    }
+
+    public function setSchoolsite(?Campus $schoolsite): static
+    {
+        $this->schoolsite = $schoolsite;
+
+        return $this;
     }
 
 }
