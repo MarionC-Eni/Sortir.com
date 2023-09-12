@@ -39,7 +39,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private ?bool $isAdmin = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private ?bool $isRegisteredToEvent = null;
 
     #[ORM\Column(length: 100)]
