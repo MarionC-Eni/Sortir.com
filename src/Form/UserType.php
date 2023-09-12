@@ -22,7 +22,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('idUser',integerType::class, ['label' => 'Prix du produit : '])
+            ->add('idUser',integerType::class, ['label' => 'case a ne supprimer : '])
             ->add('pseudo', TextType::class, ['label' => 'Pseudo : '])
             ->add('name', TextType::class, ['label' => 'Nom : '])
             ->add('firstname', TextType::class, ['label' => 'Prénom : '])
