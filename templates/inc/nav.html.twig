@@ -18,13 +18,18 @@
                     </li>
                 {% endif %}
 
-{#                {% if is_granted("ROLE_ADMIN") %}#}
+{#        MC: tentatuve pour ajouter les role
+{% if is_granted("ROLE_ADMIN") %}#}
+
+{# MC:je cache ça pour qu'on s'y retrouve
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_user_new') }}">Créer son compte</a>
                 </li>
+
+#}
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_register') }}">S'enregistrer</a>
+                    <a class="nav-link" href="{{ path('app_register') }}">Inscrire un élève</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
