@@ -4,11 +4,11 @@
 
 {% block body %}
     <div class="container">
-    <h1>Créer son compte</h1>
+    <h1>Inscrire un nouvel élève ENI Ecole informatique</h1>
 
         {{ form_start(registrationForm) }}
         {{ form_widget(registrationForm) }}
-        <button class="btn">{{ button_label|default('Save') }}</button>
+        <button class="btn btn-info my-2 my-sm-0">{{ button_label|default('Valider') }}</button>
         {{ form_end(registrationForm) }}
 
 
@@ -42,8 +42,8 @@
 
 
 
-        <button type="submit" class="btn btn-info my-2 my-sm-0">Valider</button>
-    {{ form_end(registrationForm) }}
+{#        <button type="submit" class="btn btn-info my-2 my-sm-0">Valider</button>#}
+{#    {{ form_end(registrationForm) }}#}
 
 
 

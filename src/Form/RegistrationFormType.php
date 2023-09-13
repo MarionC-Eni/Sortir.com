@@ -21,16 +21,20 @@ class RegistrationFormType extends AbstractType
     {
 
         $builder
-            ->add('pseudo', TextType::class, ['label' => 'Pseudo : '])
-            // attention name renommé username
-            ->add('username', TextType::class, ['label' => 'Nom : '])
-            ->add('firstname', TextType::class, ['label' => 'Prénom : '])
-            ->add('phone', TextType::class, ['label' => 'Téléphone : '])
+
+            // MC : en fait on en pas besoin de tous ces champs puisque c'est l'admin qui enregistre un utilisateur
+//            ->add('pseudo', TextType::class, ['label' => 'Pseudo : '])
+//            // attention name renommé username
+//            ->add('username', TextType::class, ['label' => 'Nom : '])
+//            ->add('firstname', TextType::class, ['label' => 'Prénom : '])
+//            ->add('phone', TextType::class, ['label' => 'Téléphone : '])
+//            ->add('photo', FileType::class, ['label' => 'Photo : '])
+
             ->add('email', EmailType::class, ['label' => 'Email : '])
-            ->add('photo', FileType::class, ['label' => 'Photo : '])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => 'Mot de passe : ',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

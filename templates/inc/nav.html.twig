@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ path('app_home') }}">Acccueil</a>
+        <a class="navbar-brand" href="{{ path('app_home') }}">Accueil</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,7 +11,16 @@
                         <span class="visually-hidden"></span>
                     </a>
                 </li>
+            {# MC: la bouton se deconnecter n'est visible que si on est connecte#}
+                {% if app.user %}
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                {% endif %}
+
+{#                {% if is_granted("ROLE_ADMIN") %}#}
+
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_user_new') }}">Créer son compte</a>
                 </li>
                     <li class="nav-item">
@@ -20,9 +29,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
+
+{#                {% else %}#}
+
+
+
+
             </ul>
             <form class="d-flex">
                 <input class="form-control me-sm-2" type="search" placeholder="Search">
