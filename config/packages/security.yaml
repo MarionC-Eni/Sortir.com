@@ -6,13 +6,22 @@ security:
     providers:
         users_in_memory:
           { memory: null }
+
+        app_user_provider:
+           entity:
+              class: App\Entity\User
+              # property: email # Utiliser 'email' comme propriété d'identification
+              property: email #username #_username #name # Utiliser 'email' comme propriété d'identification
+
+
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider #users_in_memory #app_user_provider
             custom_authenticator: App\Security\AppCustomAuthenticator
             logout:
                 path: app_logout
@@ -49,3 +58,11 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+
+#MC : ajout de ce listerner pour captuer mes erreurs de login
+services:
+    App\EventListener\AuthenticationFailureListener:
+        arguments:
+            $logger: '@logger'
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.authentication.failure' }
