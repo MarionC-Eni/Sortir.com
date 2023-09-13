@@ -23,7 +23,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('idUser')
+
             ->add('pseudo', TextType::class, ['label' => 'Pseudo : '])
             // attention name renommé username
             ->add('username', TextType::class, ['label' => 'Nom : '])
@@ -32,6 +32,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, ['label' => 'Email : '])
             ->add('password', PasswordType::class, ['label' => 'Mot de passe : '])
             ->add('photo', FileType::class, ['label' => 'Photo : '])
+
         ;
     }
 

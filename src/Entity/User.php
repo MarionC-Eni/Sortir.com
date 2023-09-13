@@ -57,7 +57,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     private ?Campus $schoolsite = null;
     //private $userIdentifier;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable:false)]
     private array $roles = [];
 
     public function getId(): ?int
