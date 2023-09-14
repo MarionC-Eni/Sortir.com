@@ -21,10 +21,10 @@ class Campus
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'schoolsite', targetEntity: User::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: User::class, orphanRemoval: true)]
     private Collection $users;
 
-    #[ORM\OneToMany(mappedBy: 'schoolsite', targetEntity: Event::class)]
+    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Event::class)]
     private Collection $events;
 
     public function __construct()
@@ -74,7 +74,7 @@ class Campus
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setSchoolsite($this);
+            $user->setMycampus($this);
         }
 
         return $this;
@@ -84,8 +84,8 @@ class Campus
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getSchoolsite() === $this) {
-                $user->setSchoolsite(null);
+            if ($user->getMycampus() === $this) {
+                $user->setMycampus(null);
             }
         }
 

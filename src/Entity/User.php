@@ -57,7 +57,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
-    private ?Campus $schoolsite = null;
+    private ?Campus $Mycampus = null;
     //private $userIdentifier;
 
     #[ORM\Column(type:"json")]
@@ -237,14 +237,14 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     }
 
-    public function getSchoolsite(): ?Campus
+    public function getMycampus(): ?Campus
     {
-        return $this->schoolsite;
+        return $this->Mycampus;
     }
 
-    public function setSchoolsite(?Campus $schoolsite): static
+    public function setMycampus(?Campus $mycampus): static
     {
-        $this->schoolsite = $schoolsite;
+        $this->Mycampus = $mycampus;
 
         return $this;
     }
