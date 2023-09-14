@@ -32,7 +32,7 @@ class Location
 
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?city $city = null;
+    private ?City $city = null;
 
     #[ORM\OneToMany(mappedBy: 'locationevent', targetEntity: Event::class)]
     private Collection $eventslocation;

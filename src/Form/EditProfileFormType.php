@@ -6,6 +6,8 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Campus;
 
 class EditProfileFormType extends AbstractType
 {
@@ -20,7 +22,11 @@ class EditProfileFormType extends AbstractType
             //->add('isAdmin')
             //->add('isRegisteredToEvent')
             ->add('pseudo')
-
+            ->add('mycampus', EntityType::class, [
+               'label' => 'Votre école de rattachement',
+               'class' => Campus::class,
+               'choice_label' => 'name'
+            ])
             //->add('roles')
             // MC: attention il faudra l'ajouter ->add('schoolsite')
             //  MC: attention il faudra l'ajouter ->add('photo')
