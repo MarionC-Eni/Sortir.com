@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -62,6 +64,18 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     #[ORM\Column(type:"json")]
     private array $roles = [];
+
+    #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'userregistred')]
+    private Collection $registredevents;
+
+    #[ORM\OneToMany(mappedBy: 'eventorgenazedby', targetEntity: Event::class)]
+    private Collection $organizedby;
+
+    public function __construct()
+    {
+        $this->registredevents = new ArrayCollection();
+        $this->organizedby = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -245,6 +259,63 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     public function setMycampus(?Campus $mycampus): static
     {
         $this->Mycampus = $mycampus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getRegistredevents(): Collection
+    {
+        return $this->registredevents;
+    }
+
+    public function addRegistredevent(Event $registredevent): static
+    {
+        if (!$this->registredevents->contains($registredevent)) {
+            $this->registredevents->add($registredevent);
+            $registredevent->addUserregistred($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistredevent(Event $registredevent): static
+    {
+        if ($this->registredevents->removeElement($registredevent)) {
+            $registredevent->removeUserregistred($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getOrganizedby(): Collection
+    {
+        return $this->organizedby;
+    }
+
+    public function addOrganizedby(Event $organizedby): static
+    {
+        if (!$this->organizedby->contains($organizedby)) {
+            $this->organizedby->add($organizedby);
+            $organizedby->setEventorgenazedby($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganizedby(Event $organizedby): static
+    {
+        if ($this->organizedby->removeElement($organizedby)) {
+            // set the owning side to null (unless already changed)
+            if ($organizedby->getEventorgenazedby() === $this) {
+                $organizedby->setEventorgenazedby(null);
+            }
+        }
 
         return $this;
     }

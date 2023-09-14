@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,6 +42,23 @@ class Event
 
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Campus $schoolsite = null;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'registredevents')]
+    private Collection $userregistred;
+
+    #[ORM\ManyToOne(inversedBy: 'eventslocation')]
+    private ?Location $locationevent = null;
+
+    #[ORM\ManyToOne(inversedBy: 'statesevent')]
+    private ?State $eventstate = null;
+
+    #[ORM\ManyToOne(inversedBy: 'organizedby')]
+    private ?User $eventorgenazedby = null;
+
+    public function __construct()
+    {
+        $this->userregistred = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +169,66 @@ class Event
     public function setSchoolsite(?Campus $schoolsite): static
     {
         $this->schoolsite = $schoolsite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserregistred(): Collection
+    {
+        return $this->userregistred;
+    }
+
+    public function addUserregistred(User $userregistred): static
+    {
+        if (!$this->userregistred->contains($userregistred)) {
+            $this->userregistred->add($userregistred);
+        }
+
+        return $this;
+    }
+
+    public function removeUserregistred(User $userregistred): static
+    {
+        $this->userregistred->removeElement($userregistred);
+
+        return $this;
+    }
+
+    public function getLocationevent(): ?Location
+    {
+        return $this->locationevent;
+    }
+
+    public function setLocationevent(?Location $locationevent): static
+    {
+        $this->locationevent = $locationevent;
+
+        return $this;
+    }
+
+    public function getEventstate(): ?State
+    {
+        return $this->eventstate;
+    }
+
+    public function setEventstate(?State $eventstate): static
+    {
+        $this->eventstate = $eventstate;
+
+        return $this;
+    }
+
+    public function getEventorgenazedby(): ?User
+    {
+        return $this->eventorgenazedby;
+    }
+
+    public function setEventorgenazedby(?User $eventorgenazedby): static
+    {
+        $this->eventorgenazedby = $eventorgenazedby;
 
         return $this;
     }

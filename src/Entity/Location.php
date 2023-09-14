@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
@@ -31,6 +33,14 @@ class Location
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?city $city = null;
+
+    #[ORM\OneToMany(mappedBy: 'locationevent', targetEntity: Event::class)]
+    private Collection $eventslocation;
+
+    public function __construct()
+    {
+        $this->eventslocation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +115,36 @@ class Location
     public function setCity(?city $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEventslocation(): Collection
+    {
+        return $this->eventslocation;
+    }
+
+    public function addEventslocation(Event $eventslocation): static
+    {
+        if (!$this->eventslocation->contains($eventslocation)) {
+            $this->eventslocation->add($eventslocation);
+            $eventslocation->setLocationevent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEventslocation(Event $eventslocation): static
+    {
+        if ($this->eventslocation->removeElement($eventslocation)) {
+            // set the owning side to null (unless already changed)
+            if ($eventslocation->getLocationevent() === $this) {
+                $eventslocation->setLocationevent(null);
+            }
+        }
 
         return $this;
     }
