@@ -174,6 +174,13 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this;
     }
 
+    public function getIsRegisteredToEvent(): ?bool
+    {
+        return $this->isRegisteredToEvent;
+    }
+
+
+
     public function getPseudo(): ?string
     {
         return $this->pseudo;
