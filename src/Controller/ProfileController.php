@@ -45,17 +45,23 @@ class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Si le formulaire est soumis et valide, enregistrez les modifications dans la base de données
-
             $entityManager->persist($user);
             $entityManager->flush($user);
+            
+
 
             // Redirigez l'utilisateur vers une autre page ou affichez un message de succès
             return $this->redirectToRoute('app_home');
+            
         }
+       if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('error', 'pseudo ou mail déja utilisé !');
+       }
 
         return $this->render('profile/editprofile.html.twig', [
             'user' => $profileUser,
             'form' => $form->createView(),
+
         ]);
 
 //        return $this->render('profile/editprofile.html.twig', [
