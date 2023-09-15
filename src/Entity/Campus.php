@@ -18,7 +18,7 @@ class Campus
     #[ORM\Column]
     private ?int $idCampus = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255)]//bonjour
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: User::class, orphanRemoval: true)]
