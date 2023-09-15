@@ -25,7 +25,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     // MC: ajout de generatedValue
     // MC: en fait cette proriété est un doublon de id. DONC supprimer cette colonne de la BDD
-   //  #[ORM\Column]
+    //  #[ORM\Column]
     // #[ORM\GeneratedValue(strategy: 'AUTO', nullable: true)] // Ou 'AUTO', 'IDENTITY', etc., selon la stratégie de génération appropriée
     #[ORM\Column(nullable: true)]
     private ?int $idUser = null;
@@ -62,7 +62,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     private ?Campus $Mycampus = null;
     //private $userIdentifier;
 
-    #[ORM\Column(type:"json")]
+    #[ORM\Column(type: "json")]
     private array $roles = [];
 
     #[ORM\ManyToMany(targetEntity: Event::class, mappedBy: 'userregistred')]
@@ -75,6 +75,9 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     {
         $this->registredevents = new ArrayCollection();
         $this->organizedby = new ArrayCollection();
+        // a voir si on garde ça ou pas :
+        $this->roles = []; // Tableau vide par défaut
+
     }
 
     public function getId(): ?int
@@ -197,7 +200,6 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     }
 
 
-
     public function getPseudo(): ?string
     {
         return $this->pseudo;
@@ -247,7 +249,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
     public function getUserIdentifier(): string
     {
         //    return $this->userIdentifier;
-        return (string) $this->email;
+        return (string)$this->email;
 
     }
 
@@ -320,4 +322,10 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return $this;
     }
 
+    public function __toString()
+    {
+        return (string) $this->id;
+    }
+
 }
+

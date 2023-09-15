@@ -5,37 +5,92 @@
 {% block body %}
     <h1>Event index</h1>
 
+{#    <form method="GET">#}
+{#        {{ form_start(form) }}#}
+
+{#        {{ form_row(form.campus) }}#}
+
+{#        <button type="submit">Filtrer par campus</button>#}
+
+{#        {{ form_end(form) }}#}
+{#    </form>#}
+
+    {# Créez un formulaire ou une liste déroulante pour sélectionner le campus #}
+{#    <form method="GET">#}
+{#        <label for="campus">Filtrer les sorties :</label>#}
+{#        <select name="campus" id="campus">#}
+{#            <option value="">Tous les campus</option>#}
+{#            {% for campus in campus %}#}
+{#                <option value="{{ campus.id }}">{{ campus.name }}</option>#}
+{#            {% endfor %}#}
+{#        </select>#}
+{#        <button type="submit">Filtrer</button>#}
+{#    </form>#}
+
+
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>IdEvent</th>
-                <th>Name</th>
-                <th>DateHourStart</th>
-                <th>Duration</th>
-                <th>DateLimitInscription</th>
-                <th>NbInscriptionsMax</th>
-                <th>InfosEvent</th>
-                <th>ReasonCancellation</th>
+{#                <th>Id</th>#}
+{#                <th>IdEvent</th>#}
+                <th>Intitulé</th>
+                <th>Début de l'événément</th>
+                <th>Durée</th>
+                <th>Date limite d'inscription</th>
+                <th>Nombre max de participants</th>
+                <th>Organisateur</th>
+                <th>Infos</th>
+{#                <th>ReasonCancellation</th>#}
 {#
                 <th>actions</th>
 #}
                 <th>campus</th>
+                <th>Lieu</th>
+
             </tr>
         </thead>
         <tbody>
         {% for event in events %}
             <tr>
-                <td>{{ event.id }}</td>
-                <td>{{ event.idEvent }}</td>
+{#                <td>{{ event.id }}</td>#}
+{#                <td>{{ event.idEvent }}</td>#}
                 <td>{{ event.name }}</td>
                 <td>{{ event.dateHourStart ? event.dateHourStart|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>{{ event.duration ? event.duration|date('H:i:s') : '' }}</td>
                 <td>{{ event.dateLimitInscription ? event.dateLimitInscription|date('Y-m-d') : '' }}</td>
                 <td>{{ event.NbInscriptionsMax }}</td>
+{#     Nos nombreux essais :           <td>{{ event.Eventorgenazedby }} <a href="{{ path('app_event_show', {'id': event.eventOrganizedBy.id}) }}"></a>#}
+{#                <td><a href="{{ path('app_event_new', {'id': event.eventorgenazedby}) }}"></a>#}
+{#                <td> {{ event.eventorgenazedby.username }}</td>#}
+{#                <td>{{ event.eventOrganizedBy ? event.eventOrganizedBy.username : 'N/A' }}</td>#}
+{#                <td> {{ app.user.username }}</td>#}
+{#                <td> {{ event.eventorgenazedby }}</td>#}
+
+                {% if event.eventorgenazedby is not null %}
+                    <td>{{ event.eventorgenazedby.email }}</td>
+                {% else %}
+                    <td>Organisé par l'école Eni</td>
+                {% endif %}
+
+
                 <td>{{ event.infosEvent }}</td>
-                <td>{{ event.ReasonCancellation }}</td>
-                <td>{{ event.Schoolsite }}</td>
+{#                <td>{{ event.ReasonCancellation }} </td>#}
+{#                <td>{{ event.Schoolsite }}</td>#}
+
+                {% if event.Schoolsite is not null %}
+                    <td>{{ event.Schoolsite.name }}</td>
+                {% else %}
+                    <td>A définir</td>
+                {% endif %}
+{#                <td>{{ event.locationevent }}</td>#}
+
+
+                {% if event.locationevent is not null %}
+                    <td>{{ event.locationevent.name }}</td>
+                {% else %}
+                    <td>A définir</td>
+                {% endif %}
+
             </tr>
                 <td>
                     <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>

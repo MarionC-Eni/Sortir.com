@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Campus;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,8 +18,44 @@ use Symfony\Component\Routing\Annotation\Route;
 class EventController extends AbstractController
 {
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+
+//        {
+//            // Créez un formulaire pour sélectionner le campus
+//            $form = $this->createFormBuilder()
+//                ->add('campus', ChoiceType::class, [
+//                    'label' => 'Choisir son campus:',
+//                    'choices' => $entityManager->getRepository(Campus::class)->findAll(),
+//                    'choice_label' => 'name',
+//                    'required' => false, // pour permettre la sélection de "Tous les campus"
+//                ])
+//                ->add('filter', SubmitType::class, ['label' => 'Filtrer'])
+//                ->getForm();
+//
+//            $form->handleRequest($request);
+//
+//            $selectedCampus = $form->get('campus')->getData();
+//
+//            $queryBuilder = $entityManager->createQueryBuilder()
+//                ->select('e')
+//                ->from('App\Entity\Event', 'e');
+//
+//            if ($selectedCampus) {
+//                $queryBuilder
+//                    ->andWhere('e.schoolsite = :selectedCampus')
+//                    ->setParameter('selectedCampus', $selectedCampus);
+//            }
+//
+//            $events = $queryBuilder->getQuery()->getResult();
+//
+//            return $this->render('event/index.html.twig', [
+//                'events' => $events,
+//                'form' => $form->createView(), // Passer le formulaire au template
+//            ]);
+//        }
+//    }
+
 
 //        $idcampus = 1; // nantes
 //
@@ -39,11 +78,27 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $event->setEventorgenazedby($this->getUser());
+
+//            $organizer = $form->get('eventorgenazedby')->getData();
+//
+//            // Assurez-vous que l'organisateur a des rôles valides
+//            if (empty($organizer->getRoles())) {
+//                $organizer->setRoles(['ROLE_USER']);
+//            }
+//
+//            // Enregistrez l'événement avec l'organisateur
+//            $event->setEventorgenazedby($organizer);
+
+
             $entityManager->persist($event);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
+
+
 
         return $this->render('event/new.html.twig', [
             'event' => $event,

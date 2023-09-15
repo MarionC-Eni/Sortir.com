@@ -2,12 +2,17 @@
 
 namespace App\Form;
 
+use App\Entity\Location;
 use App\Entity\Campus;
 use App\Entity\Event;
+use App\Entity\User;
+use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormTypeInterface;
 
 class EventType extends AbstractType
 {
@@ -20,8 +25,21 @@ class EventType extends AbstractType
             ->add('duration')
             ->add('dateLimitInscription')
             ->add('NbInscriptionsMax')
+
+//            ->add('eventorgenazedby', EntityType::class, [
+//                'label' => 'Organisé par : ',
+//                'class' => User::class, // Entité cible
+//                'choice_label' => 'username', // Propriété à afficher dans la liste déroulante
+//                'multiple' => false, // Permettre la sélection multiple
+//            ])
+
             ->add('infosEvent')
             ->add('ReasonCancellation')
+            ->add('locationevent', EntityType::class, [
+                'label' => 'Lieu de l\'événement',
+                'class' => Location::class,
+                'choice_label' => 'name'
+            ])
             ->add('schoolsite', EntityType::class, [
                 'label' => 'Votre école de rattachement',
                 'class' => Campus::class,
