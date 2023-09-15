@@ -50,6 +50,11 @@ class Campus
         return $this;
     }
 
+    public function __toString()
+    {
+        return (string) $this->id;
+    }
+
     public function getName(): ?string
     {
         return $this->name;

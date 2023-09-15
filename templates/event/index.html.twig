@@ -17,7 +17,10 @@
                 <th>NbInscriptionsMax</th>
                 <th>InfosEvent</th>
                 <th>ReasonCancellation</th>
+{#
                 <th>actions</th>
+#}
+                <th>campus</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +35,8 @@
                 <td>{{ event.NbInscriptionsMax }}</td>
                 <td>{{ event.infosEvent }}</td>
                 <td>{{ event.ReasonCancellation }}</td>
+                <td>{{ event.Schoolsite }}</td>
+            </tr>
                 <td>
                     <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
                     <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>

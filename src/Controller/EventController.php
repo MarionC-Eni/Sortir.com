@@ -17,11 +17,14 @@ class EventController extends AbstractController
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): Response
     {
-//        switch ()
-//        case
-//        case
-//        case
-//        case
+
+//        $idcampus = 1; // nantes
+//
+//        $events = $eventRepository->findEventsByCampus($idcampus);
+//
+//        return $this->render('event/index.html.twig', [
+//            'events' => $events,
+//        ]);
 
         return $this->render('event/index.html.twig', [
             'events' => $eventRepository->findAll(),
