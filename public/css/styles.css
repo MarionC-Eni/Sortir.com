@@ -1,0 +1,19 @@
+.header {
+    position: relative;
+}
+
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container img {
+    width: 50px; /* Ajustez la largeur de l'image selon vos préférences */
+    height: auto; /* Ajustez la hauteur automatiquement en conservant les proportions */
+    margin-right: 10px; /* Ajoutez une marge à droite pour séparer l'image du texte */
+}
+
+h1 {
+    color: goldenrod;
+}

@@ -8,17 +8,31 @@
             {% endblock %}
             {% block javascripts %}
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+                <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+                <link rel="icon" href="{{ asset('image/logo-svg.svg') }}">
+
             {% endblock %}
     </head>
 
 
     <body>
-    <header>
-        <h1>Sortir</h1>
+    <header class="header">
+        <div class="logo-container">
+
+            <img src="{{ asset('image/eni-nav.svg') }}" alt="Image en haut à gauche">
+
+            <h1>Par ici la sortie !</h1>
+        </div>
+
         {% include ('inc/nav.html.twig') %}
     </header>
+
         <main>
             {% block body %}{% endblock %}
         </main>
+
     </body>
+
 </html>
