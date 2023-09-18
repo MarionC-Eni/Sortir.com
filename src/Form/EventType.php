@@ -6,10 +6,12 @@ use App\Entity\Location;
 use App\Entity\Campus;
 use App\Entity\Event;
 use App\Entity\User;
+use Doctrine\DBAL\Types\DateType;
 use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormTypeInterface;
@@ -20,7 +22,7 @@ class EventType extends AbstractType
     {
         $builder
             //->add('idEvent')
-            ->add('name')
+            ->add('name', TextType::class, ['label' => 'Intitulé : '])
             ->add('dateHourStart')
             ->add('duration')
             ->add('dateLimitInscription')
@@ -34,7 +36,7 @@ class EventType extends AbstractType
 //            ])
 
             ->add('infosEvent')
-            ->add('ReasonCancellation')
+//            ->add('ReasonCancellation')
             ->add('locationevent', EntityType::class, [
                 'label' => 'Lieu de l\'événement',
                 'class' => Location::class,

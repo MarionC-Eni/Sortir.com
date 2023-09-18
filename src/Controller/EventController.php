@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Event;
 use App\Entity\Campus;
+use App\Form\EventFilterFormType;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,6 +21,55 @@ class EventController extends AbstractController
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+//MC: revenir à cette version avant si pb avec le formulaire des filters
+//        return $this->render('event/index.html.twig', [
+//            'events' => $eventRepository->findAll(),
+//        ]);
+//    }
+
+        $searchData = [
+            'min_date' => new \DateTime("- 1 month"),
+            'max_date' => new \DateTime("+ 1 year"),
+//MC : on ne rajoute pas ici de quoi aller filtrer selon le schooliste
+            'eventorgenazedby' => true,
+        ];
+
+        $filterForm = $this->createForm(EventFilterFormType::class, $searchData);
+
+        $filterForm->handleRequest($request);
+
+        $criteria = [];
+
+        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+            $formData = $filterForm->getData();
+
+            if ($formData['min_date']) {
+                $criteria['min_date'] = $formData['min_date'];
+            }
+
+            if ($formData['max_date']) {
+                $criteria['max_date'] = $formData['max_date'];
+            }
+
+            // Add campus filtering criteria
+            if ($formData['schoolsite']) {
+                $criteria['schoolsite'] = $formData['schoolsite'];
+            }
+
+        }
+
+        $events = $eventRepository->findByCriteria($criteria);
+
+
+        return $this->render('event/index.html.twig', [
+            'filterForm' => $filterForm->createView(),
+            'events' => $events,
+        ]);
+    }
+
+
+
+
 
 //        {
 //            // Créez un formulaire pour sélectionner le campus
@@ -65,10 +115,7 @@ class EventController extends AbstractController
 //            'events' => $events,
 //        ]);
 
-        return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
-        ]);
-    }
+
 
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -105,6 +152,7 @@ class EventController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_event_show', methods: ['GET'])]
     public function show(Event $event): Response
@@ -143,3 +191,4 @@ class EventController extends AbstractController
         return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+

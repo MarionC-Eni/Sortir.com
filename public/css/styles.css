@@ -26,7 +26,7 @@
 
 .bg-size-full {
     object-fit: cover; /* Redimensionne l'image pour qu'elle couvre tout l'écran */
-    max-width: 20%; /* Limite la largeur de l'image à 50% de la largeur de l'écran */
+    max-width: 50%; /* Limite la largeur de l'image à 50% de la largeur de l'écran */
     max-height: 50%; /* Limite la hauteur de l'image à 50% de la hauteur de l'écran */
 }
 
@@ -43,3 +43,62 @@
     justify-content: center;
     align-items: center;
 }
+
+/*.text-padding {*/
+/*    padding-right: 5px;*/
+/*}*/
+
+.text-right {
+    text-align: right;
+}
+
+/* styles.css */
+.custom-link {
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Apply styles to the date input wrapper */
+.date-input-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Adjust the width of the date input divs */
+.date-input {
+    width: auto; /* Allow divs to expand to fit content */
+    display: flex;
+    align-items: center; /* Vertically align label and input */
+}
+
+/* Apply styles directly to the date input fields */
+.date-input input[type="date"] {
+    width: 120px; /* Adjust the width as needed */
+}
+
+.date-input:first-child {
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+/* Optionally, style the labels for consistency */
+.date-input label {
+    margin-right: 5px;
+}
+
+.search-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px; /* Ajustez la marge supérieure selon vos besoins */
+}
+
+/* Ajustez la taille du bouton de recherche */
+.search-button-wrapper .btn {
+    font-size: 14px; /* Ajustez la taille de la police du bouton */
+    padding: 5px 10px; /* Ajustez le rembourrage du bouton */
+}
+

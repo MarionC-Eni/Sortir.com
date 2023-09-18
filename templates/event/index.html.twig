@@ -3,9 +3,61 @@
 {% block title %}Event index{% endblock %}
 
 {% block body %}
-    <h1>Event index</h1>
+<h1 style="text-align: center; padding-top: 5px;">Idées de sorties</h1>
 
-                    <h4> Participant : {{ app.user.username }}</h4>
+
+
+{#    mc: mettre ça à gauche#}
+    <div class="container">
+    <div class="text-padding text-right">
+        Date du jour : {{ "now"|date("d/m/Y") }}
+    </div>
+    <div class="text-padding text-right">
+        Participant : {{ app.user.username }}
+    </div>
+    </div>
+
+<div class="container">
+    <h6>Filtrer les sorties</h6>
+{#    <h7>Campus</h7>#}
+{#    <div class="text-left">#}
+{#    Le nom de la sortie contient#}
+{#    </div>#}
+
+{#    MC : j'ai créé ici des filtres :#}
+    <div class="container-fluid">
+        {{ form_start(filterForm) }}
+{#        {{ form_widget(filterForm }}#}
+        {{ form_row(filterForm.schoolsite, {'attr': {'style': 'width: 120px;'}}) }}
+
+        <div class="date-input-wrapper">
+            <div class="date-input">
+                {{ form_label(filterForm.min_date) }}
+                {{ form_widget(filterForm.min_date, {'attr': {'style': 'width: 120px;'}}) }}
+            </div>
+            <div class="date-input">
+                {{ form_label(filterForm.max_date) }}
+                {{ form_widget(filterForm.max_date, {'attr': {'style': 'width: 120px;'}}) }}
+            </div>
+
+        </div>
+        <br>
+
+
+        {{ form_row(filterForm.eventorgenazedby) }}
+
+        {{ form_row(filterForm.submit) }}
+        {{ form_end(filterForm) }}
+    </div>
+
+    <form class="d-flex">
+        <input class="form-control me-sm-2" type="search" placeholder="Rechercher">
+        <button class="btn btn-info my-2 my-sm-0" type="submit">Rechercher</button>
+    </form>
+
+</div>
+
+
 
 
     {#    <form method="GET">#}
@@ -30,6 +82,7 @@
 {#        <button type="submit">Filtrer</button>#}
 {#    </form>#}
 
+<div class="container">
 
     <table class="table">
         <thead>
@@ -95,18 +148,45 @@
                 {% endif %}
 
             </tr>
-                <td>
-                    <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
-                    <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
-                </td>
+
+{#                <td>#}
+{#                   MC: test 1 la modification ne devrait être accessibles qu'à l'organisateur qui a créé une sortie#}
+{#                    {% if app.user %}#}
+{#                        <a href="{{ path('app_event_show', {'id': event.id}) }}">En savoir plus...</a>#}
+{#                        <a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a>#}
+{#                    {% else %}#}
+{#                        <a href="{{ path('app_event_show', {'id': event.id}) }}">En savoir plus</a>#}
+{#                    {% endif %}#}
+{#                </td>#}
+{#            </tr>#}
+{#            #}
+{#        {% else %}#}
+
+            <td>
+{#       MC : la modification ne devrait être accessibles qu'à l'organisateur qui a créé une sortie         #}
+            {% if app.user and event.eventorgenazedby == app.user %}
+                <a href="{{ path('app_event_show', {'id': event.id}) }}">En savoir plus...</a>
+                <a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a>
+            {% else %}
+                <a href="{{ path('app_event_show', {'id': event.id}) }}">En savoir plus</a>
+            {% endif %}
+            </td>
             </tr>
-        {% else %}
+
+
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">--</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <br>
 
-    <a href="{{ path('app_event_new') }}">Créer une sortie</a>
+</div>
+
+    <div class="container">
+    <a href="{{ path('app_event_new') }}" class="custom-link" >Créer une sortie</a>
+    </div>
+    <br>
+
 {% endblock %}
