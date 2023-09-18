@@ -17,6 +17,12 @@
     </div>
     </div>
 
+    {% for label, messages in app.flashes %}
+        {% for message in messages %} <div class="alert-{{ label }}"> {{ message }}
+        </div>
+        {% endfor %}
+    {% endfor %}
+
 <div class="container">
     <h6>Filtrer les sorties</h6>
 {#    <h7>Campus</h7>#}
@@ -163,17 +169,17 @@
 {#            </tr>#}
 {#            #}
 {#        {% else %}#}
-
+            <tr>
             <td>
 {#       MC : la modification ne devrait être accessibles qu'à l'organisateur qui a créé une sortie         #}
             {% if app.user and event.eventorgenazedby == app.user %}
-                <a href="{{ path('app_event_show', {'id': event.id}) }}">En savoir plus...</a>
-                <a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a>
+                <a href="{{ path('app_event_show', {'id': event.id}) }}">• En savoir plus...</a>
+                <a href="{{ path('app_event_edit', {'id': event.id}) }}">• Modifier</a>
             {% else %}
-                <a href="{{ path('app_event_show', {'id': event.id}) }}">En savoir plus</a>
-                <a href="{{ path('app_event_index') }}">S'inscrire</a>
+                <a href="{{ path('app_event_show', {'id': event.id}) }}">• En savoir plus</a>
+                <a href="{{ path('app_subscription', {'eventId': event.id}) }}">• S'inscrire</a>
                 {#  creer un if pour supprimer le bouton se desinscrire si on n'est pas inscrit #}
-                <a href="{{ path('app_event_index') }}">Se désinscrire</a>
+                <a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">• Se désinscrire</a>
             {% endif %}
             </td>
             </tr>
