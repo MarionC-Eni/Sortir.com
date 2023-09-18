@@ -90,7 +90,7 @@
 {#                <th>Id</th>#}
 {#                <th>IdEvent</th>#}
                 <th>Intitulé</th>
-                <th>Début de l'événément</th>
+                <th>Début de l'évènement</th>
                 <th>Durée</th>
                 <th>Date limite d'inscription</th>
                 <th>Nombre max de participants</th>
@@ -100,6 +100,8 @@
 {#
                 <th>actions</th>
 #}
+
+
                 <th>campus</th>
                 <th>Lieu</th>
 
@@ -169,6 +171,9 @@
                 <a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a>
             {% else %}
                 <a href="{{ path('app_event_show', {'id': event.id}) }}">En savoir plus</a>
+                <a href="{{ path('app_event_index') }}">S'inscrire</a>
+                {#  creer un if pour supprimer le bouton se desinscrire si on n'est pas inscrit #}
+                <a href="{{ path('app_event_index') }}">Se désinscrire</a>
             {% endif %}
             </td>
             </tr>

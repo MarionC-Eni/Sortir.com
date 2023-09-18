@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
 
 class EventType extends AbstractType
 {
@@ -23,7 +25,7 @@ class EventType extends AbstractType
         $builder
             //->add('idEvent')
             ->add('name', TextType::class, ['label' => 'Intitulé : '])
-            ->add('dateHourStart')
+            ->add('dateHourStart', DateTimeType::class, ['label' => 'Date et heure de début'])
             ->add('duration')
             ->add('dateLimitInscription')
             ->add('NbInscriptionsMax')
