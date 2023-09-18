@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -31,6 +32,10 @@ class Event
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateLimitInscription = null;
 
+     #[Assert\Range(min:0, max:15,
+        minMessage:"ne peux pas etre négatif",
+        maxMessage:"nombre max de participant !",
+    )]
     #[ORM\Column]
     private ?int $NbInscriptionsMax = null;
 
@@ -231,5 +236,14 @@ class Event
         $this->eventorgenazedby = $eventorgenazedby;
 
         return $this;
+    }
+
+    public function isMaxedOut(): bool
+    {
+    if ($this->getNbInscriptionsMax() && $this->getUserregistred()->count() >= $this->getNbInscriptionsMax()){
+        return true;
+    }
+
+    return false;
     }
 }
