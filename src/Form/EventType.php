@@ -14,12 +14,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormTypeInterface;
 
+
 class EventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             //->add('idEvent')
+            ->add('eventorgenazedby', NumberType::class,[
+            'label' => 'name',])
             ->add('name')
             ->add('dateHourStart')
             ->add('duration')
@@ -34,7 +37,7 @@ class EventType extends AbstractType
 //            ])
 
             ->add('infosEvent')
-            ->add('ReasonCancellation')
+            //->add('ReasonCancellation')
             ->add('locationevent', EntityType::class, [
                 'label' => 'Lieu de l\'événement',
                 'class' => Location::class,
