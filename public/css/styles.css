@@ -14,6 +14,31 @@
     margin-right: 10px; /* Ajoutez une marge à droite pour séparer l'image du texte */
 }
 
-h1 {
-    color: goldenrod;
+
+.bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Pour que l'image soit derrière le contenu */
 }
+
+.bg-size-full {
+    object-fit: cover; /* Redimensionne l'image pour qu'elle couvre tout l'écran */
+    max-width: 20%; /* Limite la largeur de l'image à 50% de la largeur de l'écran */
+    max-height: 50%; /* Limite la hauteur de l'image à 50% de la hauteur de l'écran */
+}
+
+.bg-position-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bienvenue-container {
+    width: 100%; /* Largeur de l'élément à 100% pour occuper toute la largeur de la page */
+    height: 100vh; /* Hauteur de l'élément à 100% de la hauteur de la vue (viewport) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
