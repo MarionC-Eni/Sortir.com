@@ -1,6 +1,9 @@
 <div class="container-fluid">
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="custom-link">{{ button_label|default('Enregistrer') }}</button>
+{#    MC: ancienne version :     <button class="btn">{{ button_label|default('Save') }}</button>#}
+
     {{ form_end(form) }}
 </div>
+

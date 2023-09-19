@@ -17,6 +17,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+
+
 
 
 class EventType extends AbstractType
@@ -27,9 +31,9 @@ class EventType extends AbstractType
             //->add('idEvent')
             ->add('name', TextType::class, ['label' => 'Intitulé : '])
             ->add('dateHourStart', DateTimeType::class, ['label' => 'Date et heure de début : '])
-            ->add('duration', Integer::class, ['label' => 'Durée : '])
+            ->add('duration', TimeType::class, ['label' => 'Durée : '])
             ->add('dateLimitInscription', DateTimeType::class, ['label' => 'Date limite d\'inscription : '])
-            ->add('NbInscriptionsMax', Integer::class, ['label' => 'Inscription max : '])
+            ->add('NbInscriptionsMax', IntegerType::class, ['label' => 'Inscription max : '])
 
 //            ->add('eventorgenazedby', EntityType::class, [
 //                'label' => 'Organisé par : ',

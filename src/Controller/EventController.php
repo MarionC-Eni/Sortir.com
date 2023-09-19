@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\State;
 use App\Entity\Campus;
 use App\Form\EventFilterFormType;
 use App\Form\EventType;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\EventStateService\EventStateService;
 
 #[Route('/event')]
 class EventController extends AbstractController
@@ -179,6 +181,67 @@ class EventController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    private $eventStateService;
+
+    public function __construct(EventStateService $eventStateService)
+    {
+        $this->eventStateService = $eventStateService;
+    }
+    #[Route('/{id}/publish', name: 'app_event_publish', methods: ['GET', 'POST'])]
+    public function publishEvent(Request $request, Event $event, EventStateService $eventstateservice): Response
+    {
+
+        $stateId = 2; // L'ID de l'état que vous souhaitez attribuer à l'événement
+        $state = $eventstateservice->getStateById($stateId);
+
+        if ($state->getId() == 2) {
+            $this->addFlash('error', '<span class="error-flash">L\'événement a déjà été publié.</span>');
+
+        } else {
+           $eventstateservice->changeEventState($event, $state);
+            $this->addFlash('success', 'L\'événement a été publié avec succès.');
+        }
+
+        return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
+    }
+//        // Récupérez l'ID de l'état "Publié" depuis la base de données
+//        $publishedStateId = 2;
+//        // on pourra créé les autres états après
+//
+//        // Récupérez l'entité State correspondant à l'ID
+//        $publishedState = $this->getRepository(State::class)->find($publishedStateId);
+//
+//        if (!$publishedState) {
+//            throw $this->createNotFoundException('L\'état "Publié" n\'a pas été trouvé.');
+//        }
+//
+//        // Appelez la méthode pour changer l'état de l'événement en utilisant l'entité State correspondant à l'ID
+//        $eventstateservice->changeEventState($event, $publishedState);
+//
+//        $this->addFlash('success', 'L\'événement a été publié avec succès.');
+//
+//        return $this->redirectToRoute('app_event_show', ['id' => $event->getId()]);
+//    }
+
+
+//    public function publish(Event $event)
+//    {
+//        //vérifie que c'est bien l'roganisateur qui est en train de publier
+//        if ($this->getUser() !== $event->getEventorgenazedby()) {
+//            throw $this->createAccessDeniedException("Seul l'organisateur de cette sortie peut la mettre en ligne !");
+//        }
+//
+//        //vérifie que ça peut être publié : on fera ça plus tard
+//
+//        $this->addFlash('success', 'La sortie est mise en ligne !');
+//
+//        return $this->redirectToRoute('app_subscription', ['id' => $event->getId()]);
+//    }
+//
+//
+//}
+
 
     #[Route('/{id}', name: 'app_event_delete', methods: ['POST'])]
     public function delete(Request $request, Event $event, EntityManagerInterface $entityManager): Response

@@ -102,3 +102,6 @@
     padding: 5px 10px; /* Ajustez le rembourrage du bouton */
 }
 
+.error-flash {
+    background-color: red;
+}

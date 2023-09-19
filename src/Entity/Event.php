@@ -237,8 +237,19 @@ class Event
 
         return $this;
     }
-
+//
+//    public function __toString()
+//    {
+//        $elements = $this->collection->toArray(); // Supposons que $this->collection est votre PersistentCollection
+//        $strings = array_map(function ($element) {
+//            return (string)$element->getId(); // Supposons que vous voulez obtenir l'ID de chaque élément
+//        }, $elements);
+//
+//        return implode(', ', $strings); // Construisez une chaîne en séparant les éléments par des virgules (ou tout autre séparateur souhaité)
+//    }
 }
+
+
 
 //    public function isMaxedOut(): bool
 //    {

@@ -110,6 +110,7 @@
 
                 <th>campus</th>
                 <th>Lieu</th>
+                <th>État</th>
 
             </tr>
         </thead>
@@ -153,6 +154,12 @@
                     <td>{{ event.locationevent.name }}</td>
                 {% else %}
                     <td>A définir</td>
+                {% endif %}
+
+                {% if event.eventstate is not null %}
+                    <td>{{ event.eventstate.label }}</td>
+                {% else %}
+                    <td>Pas encore publié</td>
                 {% endif %}
 
             </tr>
