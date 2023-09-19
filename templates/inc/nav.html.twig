@@ -30,6 +30,17 @@
                         <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
                     </li>
                 {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Inscrire un élève</a>
+                    
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                     <a class="nav-link" href="{{ path('app_admin') }}">Se connecter en tant qu'admin</a>
+                     </li>
+                {% endif %}
+                
 
 {#        MC: tentatuve pour ajouter les role
 {% if is_granted("ROLE_ADMIN") %}#}
@@ -43,10 +54,6 @@
 #}
 
                 {# MC: app_register sera uniquement visible par l'admin quand on aura géré les droits... #}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_register') }}">Inscrire un élève</a>
-                </li>
 
 
             </ul>

@@ -233,7 +233,7 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): static //ou self a la place de static ?
     {
         $this->roles = $roles;
 
