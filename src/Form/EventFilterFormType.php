@@ -49,7 +49,7 @@ class EventFilterFormType extends AbstractType
 
             ->add('eventorgenazedby', CheckboxType::class, [
                 'label' => "Sorties dont je suis l'organisateur/trice",
-                'required' => false,
+                'required' => true,
             ])
 
             ->add('submit', SubmitType::class, ['label' => 'Filtrer'])
