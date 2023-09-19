@@ -8,6 +8,7 @@ use App\Entity\Event;
 use App\Entity\User;
 use Doctrine\DBAL\Types\DateType;
 use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -25,10 +26,10 @@ class EventType extends AbstractType
         $builder
             //->add('idEvent')
             ->add('name', TextType::class, ['label' => 'Intitulé : '])
-            ->add('dateHourStart', DateTimeType::class, ['label' => 'Date et heure de début'])
-            ->add('duration')
-            ->add('dateLimitInscription')
-            ->add('NbInscriptionsMax')
+            ->add('dateHourStart', DateTimeType::class, ['label' => 'Date et heure de début : '])
+            ->add('duration', Integer::class, ['label' => 'Durée : '])
+            ->add('dateLimitInscription', DateTimeType::class, ['label' => 'Date limite d\'inscription : '])
+            ->add('NbInscriptionsMax', Integer::class, ['label' => 'Inscription max : '])
 
 //            ->add('eventorgenazedby', EntityType::class, [
 //                'label' => 'Organisé par : ',
@@ -37,7 +38,7 @@ class EventType extends AbstractType
 //                'multiple' => false, // Permettre la sélection multiple
 //            ])
 
-            ->add('infosEvent')
+            ->add('infosEvent',TextType::class, ['label' => 'Description : '])
 //            ->add('ReasonCancellation')
             ->add('locationevent', EntityType::class, [
                 'label' => 'Lieu de l\'événement',

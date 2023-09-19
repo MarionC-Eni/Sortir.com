@@ -15,14 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/subscribeEvent')]
-class subscribeEvent extends AbstractController {
-
-
-public function subscribeToEvent (Event $event){
-
-    new subscriptionToEvent
-
-}}
+//#[Route('/subscribeEvent')]
+//class subscribeEvent extends AbstractController
+//{
+//public function subscribeToEvent (Event $event)
+//{
+//
+//    new subscriptionToEvent
+//
+//}}
 
 
