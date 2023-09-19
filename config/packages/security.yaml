@@ -42,13 +42,13 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
-    #access_control:
+    access_control:
         # require ROLE_ADMIN for /admin*
         #- { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/registrer$, roles: ROLE_USER }
+        - { path: ^/registrer$, roles: ROLE_USER }
         #- { path: ^/admin, roles: ROLE_ADMIN }
-       # - { path: ^/, roles: PUBLIC_ACCESS }
-            #- { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/, roles: PUBLIC_ACCESS }
+        - { path: ^/profile, roles: ROLE_USER }
 
         # or require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
         #- { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
