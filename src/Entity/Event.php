@@ -247,16 +247,16 @@ class Event
 //
 //        return implode(', ', $strings); // Construisez une chaîne en séparant les éléments par des virgules (ou tout autre séparateur souhaité)
 //    }
+
+
+
+
+    public function isEventFull(): bool
+    {
+        if ($this->getNbInscriptionsMax() && $this->getUserregistred()->count() >= $this->getNbInscriptionsMax()){
+            return true;
+        }
+
+       return false;
+    }
 }
-
-
-
-//    public function isMaxedOut(): bool
-//    {
-//        if ($this->getNbInscriptionsMax() && $this->getUserregistred()->count() >= $this->getNbInscriptionsMax()){
-//            return true;
-//        }
-//
-//        return false;
-//    }
-//}

@@ -86,6 +86,7 @@
 <ul>
     <li><a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a></li>
     {{ include('event/_delete_form.html.twig') }}
+
 </ul>
 
     {% else %}
@@ -93,10 +94,12 @@
 <li><a href="{{ path('app_event_index') }}">Retour aux sorties</a></li>
 <li><a href="{{ path('app_subscription', {'eventId': event.id}) }}">S'inscrire</a></li>
         {#  creer un if pour supprimer le bouton se desinscrire si on n'est pas inscrit #}
-<li> <a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">Se désinscrire</a></li>
+        {#<li> <a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">Se désinscrire</a></li>#}
+    
 </ul>
     {% endif %}
 
-{#    MC: à voir qui peut supprimer un event : l'admin ou l'organisateur ? différencier annuler et supprimer#}
-{#    {{ include('event/_delete_form.html.twig') }}#}
-{% endblock %}
+
+{#    MC: à voir qui peut supprimer un event : l'admin ou l'organisateur ? différencier annuler et supprimer#}  
+    {% endblock %}
+
