@@ -49,15 +49,15 @@
 {#                <th>ReasonCancellation</th>#}
 {#                <td>{{ event.ReasonCancellation }}</td>#}
 {#            </tr>#}
-            <tr>
-                <th>Campus</th>
-                <td>{{ event.schoolsite }}</td>
-            </tr>
-            <tr>
-                <th>Lieu</th>
-                <td>{{ event.locationevent }}</td>
-            </tr>
-            <tr>
+<tr>
+    <th>Campus</th>
+    <td>{{ event.schoolsite.name }}</td>
+</tr>
+<tr>
+    <th>Lieu</th>
+    <td>{{ event.locationevent.name }}</td>
+</tr>
+<tr>
 
                 <th>Nom des inscrits</th>
                 {% if event.userregistred is not null %}
