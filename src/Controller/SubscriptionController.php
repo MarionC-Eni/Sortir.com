@@ -53,6 +53,15 @@ class SubscriptionController extends AbstractController
 //        $eventSubscription->setUser($user);
 //        $eventSubscription->setEvent($event);
 
+        // je rajoute la condition de clôture des inscription
+        $dateLimitInscription = $event->getDateLimitInscription();
+
+        $currentDate = new \DateTime();
+            if ($dateLimitInscription <= $currentDate) {
+                $this->addFlash('error', 'L\'inscription à cette sortie est clôturée');
+                return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            }
+
         $user->addRegistredevent($event);
 
 
