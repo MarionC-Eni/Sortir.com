@@ -58,7 +58,7 @@ class SubscriptionController extends AbstractController
 
         $currentDate = new \DateTime();
             if ($dateLimitInscription <= $currentDate) {
-                $this->addFlash('error', 'L\'inscription à cette sortie est clôturée');
+                $this->addFlash('danger', 'L\'inscription à cette sortie est clôturée');
                 return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
             }
         
@@ -66,6 +66,12 @@ class SubscriptionController extends AbstractController
                 $this->addFlash("danger", "Cette sortie est complète !");
                 return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
             }
+
+            if(isSubscribed){
+                $this->addFlash("success", "Vous êtes deja inscrit/es !");
+                }
+        
+                return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
 
         $user->addRegistredevent($event);
 
@@ -76,10 +82,6 @@ class SubscriptionController extends AbstractController
 
 //        //on refresh la sortie pour avoir le bon nombre d'inscrits avant le tchèque ci-dessous
 //        $em->refresh($event);
-
-        $this->addFlash("success", "Vous êtes inscrit/es !");
-
-        return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
 
 //        return $this->render('subscription/index.html.twig', [
 //            'controller_name' => 'SubscriptionController',
