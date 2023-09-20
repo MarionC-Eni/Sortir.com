@@ -61,6 +61,11 @@ class SubscriptionController extends AbstractController
                 $this->addFlash('error', 'L\'inscription à cette sortie est clôturée');
                 return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
             }
+        
+            if ($event->isEventFull()){
+                $this->addFlash("danger", "Cette sortie est complète !");
+                return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            }
 
         $user->addRegistredevent($event);
 
