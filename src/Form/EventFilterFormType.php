@@ -37,7 +37,8 @@ class EventFilterFormType extends AbstractType
                 'widget' => 'single_text',
 //                // mc: rajouter plus tard du javascript pour gérer le calendrier
 //                'attr' => ['class' => 'datepicker'],
-                'format' => 'dd/MM/yyyy'
+                'format' => 'dd/MM/yyyy',
+                'required' => false,
             ])
 
             ->add('max_date', DateType::class, [
@@ -45,7 +46,8 @@ class EventFilterFormType extends AbstractType
 // MC : à voir si on laisse la possibilité à l'utilisateur de saisir manuellement une date au format texte
                 'html5' => false,
                 'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy'
+                'format' => 'dd/MM/yyyy',
+                'required' => false,
             ])
 
 
@@ -58,11 +60,12 @@ class EventFilterFormType extends AbstractType
                 'label' => "Sorties auxquelles je suis inscrit/e",
                 'required' => false,
             ])
-//
-//            ->add('not_registered', CheckboxType::class, [
-//                'label' => "Sorties auxquelles je ne suis pas inscrit/e",
-//                'required' => false,
-//            ])
+
+
+            ->add('not_registered', CheckboxType::class, [
+                'label' => "Sorties auxquelles je ne suis pas inscrit/e",
+                'required' => false,
+            ])
 //
 //            ->add('past_event', CheckboxType::class, [
 //                'label' => "Sorties passées",

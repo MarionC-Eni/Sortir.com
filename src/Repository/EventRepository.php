@@ -64,7 +64,7 @@ class EventRepository extends ServiceEntityRepository
 //            }
 //        }
 
-// tenative 4 qui fonctionne :
+// tentative 4 qui fonctionne :
 //        if ($user instanceof User) {
 //            $qb->andWhere('e.eventorgenazedby = :organizer')
 //                ->setParameter('organizer', $user);
@@ -75,11 +75,23 @@ class EventRepository extends ServiceEntityRepository
                 ->setParameter('organizer', $user);
         }
 
-        if ($user instanceof User && isset($criteria['userregistred']) && $criteria['userregistred']) {
-            $qb->andWhere(':user MEMBER OF e.userregistred')
-                ->setParameter('user', $user);
-        }
+//         tentative 5 qui fonctionne :
+//        if ($user instanceof User && isset($criteria['userregistred']) && $criteria['userregistred']) {
+//            $qb->andWhere(':user MEMBER OF e.userregistred')
+//                ->setParameter('user', $user);
+//        }
 
+// tentative n° 6 pour gérer les dinscriptions mais ça ne fonctionne pas
+        if ($user instanceof User && isset($criteria['userregistred']) && $criteria['userregistred']) {
+          $qb->andWhere(':user MEMBER OF e.userregistred')
+              ->setParameter('user', $user);
+       }
+
+
+        if ($user instanceof User && isset($criteria['not_registered']) && $criteria['not_registered']) {
+                $qb->andWhere(':user NOT MEMBER OF e.userregistred')
+                    ->setParameter('user', $user);
+        }
 
 // MC: On va distinguer les querybuilder "filter" les qb "chexbox" pour le moment et les assembler dans la requête finale
 // $qb->andWhere($checkBox);
