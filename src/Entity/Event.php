@@ -259,4 +259,15 @@ class Event
 
        return false;
     }
+
+    public function isSubscribed(UserInterface $user): bool
+    {
+        foreach($this->getUserregistred() as $sub){
+            if ($sub->getUser() === $user){
+                return true;
+            }
+        }
+
+        return false;
+}
 }

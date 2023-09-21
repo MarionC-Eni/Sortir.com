@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Entity\State;
 use App\Entity\Campus;
 use App\Form\EventFilterFormType;
+use App\Form\EventCancelationType;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -121,7 +122,6 @@ class EventController extends AbstractController
 //        ]);
 
 
-
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -149,7 +149,6 @@ class EventController extends AbstractController
 
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
-
 
 
         return $this->render('event/new.html.twig', [
@@ -191,6 +190,7 @@ class EventController extends AbstractController
     {
         $this->eventStateService = $eventStateService;
     }
+
     #[Route('/{id}/publish', name: 'app_event_publish', methods: ['GET', 'POST'])]
     public function publishEvent(Request $request, Event $event, EventStateService $eventstateservice): Response
     {
@@ -199,10 +199,10 @@ class EventController extends AbstractController
         $state = $eventstateservice->getStateById($stateId);
 
         if ($state->getId() == 2) {
-            $this->addFlash('error', '<span class="error-flash">L\'événement a déjà été publié.</span>');
+            $this->addFlash('danger', '<span class="error-flash">L\'événement a déjà été publié.</span>');
 
         } else {
-           $eventstateservice->changeEventState($event, $state);
+            $eventstateservice->changeEventState($event, $state);
             $this->addFlash('success', 'L\'événement a été publié avec succès.');
         }
 
@@ -245,16 +245,87 @@ class EventController extends AbstractController
 //
 //}
 
-
+// pour que ce soit plus clair, précisons que delete aurait plutôt s'appeler "cancel"
     #[Route('/{id}', name: 'app_event_delete', methods: ['POST'])]
     public function delete(Request $request, Event $event, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+        $dateHourStart = $event->getDateHourStart();
+        $currentDate = new \DateTime();
+
+        if ($dateHourStart > $currentDate) {
+            return $this->redirectToRoute('app_event_confirm_cancellation', ['id' => $event->getId()]);
+        } else {
+            // Si l'événement est déjà passé, affichez un message d'erreur
+            $this->addFlash('danger', 'Impossible d\'annuler cet événement : il est déjà passé');
+            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+        }
+    }
+
+#[Route('/{id}/confirm-cancellation', name: 'app_event_confirm_cancellation', methods: ['GET', 'POST'])]
+public function confirmCancellation(Request $request, Event $event, EntityManagerInterface $entityManager, EventStateService $eventstateservice): Response
+    {
+        $form = $this->createForm(EventCancelationType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Supprimez l'événement
             $entityManager->remove($event);
             $entityManager->flush();
+
+            // Récupérez la raison d'annulation à partir du formulaire
+            $reasonCancellation = $form->get('ReasonCancellation')->getData();
+
+            $event->setReasonCancellation($reasonCancellation);
+
+            // Vérifiez si l'état de l'événement est déjà annulé
+            if ($event->getEventstate() === null || $event->getEventstate()->getId() !== 5) {
+                // Si l'état n'est pas déjà annulé, annulez l'événement
+                $stateId = 5; // L'ID de l'état à attribuer pour annuler l'événement
+                $state = $eventstateservice->getStateById($stateId);
+                $eventstateservice->changeEventState($event, $state);
+                $this->addFlash('success', 'L\'événement a bien été annulé.');
+            } else {
+                $this->addFlash('danger', 'L\'événement est déjà annulé.');
+            }
+
+            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+
+        return $this->render('event/cancelation.html.twig', [
+            'event' => $event,
+            'cancelForm' => $form->createView()
+        ]);
     }
+
 }
+
+
+//
+// ce code marche mais il faut rajouter le motif d'annulation
+//    {
+//        $dateHourStart = $event->getDateHourStart();
+//
+//        $currentDate = new \DateTime();
+//        if ($dateHourStart > $currentDate) {
+//
+//            if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
+//                $entityManager->remove($event);
+//                $entityManager->flush();
+//                $this->addFlash('success', 'L\'événement a bien été annulé');}
+//
+//
+//            else {
+//                // message d'erreur si le jeton CSRF n'est pas valide
+//                $this->addFlash('danger', 'Erreur de sécurité : Token CSRF invalide.');
+//            }
+//        } else {
+//            // Si l'événement est déjà passé, affichez un message d'erreur
+//            $this->addFlash('danger', 'Impossible d\'annuler cet événement : il est déjà passé');
+//        }
+//
+//
+//        return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+//    }
+//}
 

@@ -2,3 +2,9 @@
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
     <button class="custom-link">Supprimer</button>
 </form>
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %} <div class="alert-{{ label }}"> {{ message }}
+    </div>
+    {% endfor %}
+{% endfor %}
