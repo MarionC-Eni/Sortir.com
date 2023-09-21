@@ -21,7 +21,8 @@
         {% for message in messages %} <div class="alert-{{ label }}"> {{ message }}
         </div>
         {% endfor %}
-    {% endfor %}
+        {% endfor %}
+    
 
 <div class="container">
     <h6>Filtrer les sorties</h6>
@@ -123,18 +124,13 @@
             <tr>
 {#                <td>{{ event.id }}</td>#}
 {#                <td>{{ event.idEvent }}</td>#}
-                <td>{{ event.name }}</td>
+                <td>
+                    <a href="{{ path('app_event_show', {'id': event.id}) }}">{{ event.name }}</a>
+                </td>
                 <td>{{ event.dateHourStart ? event.dateHourStart|date('Y-m-d H:i:s T') : '' }}</td>
                 <td>{{ event.duration ? event.duration|date('H:i:s') : '' }}</td>
                 <td>{{ event.dateLimitInscription ? event.dateLimitInscription|date('Y-m-d') : '' }}</td>
                 <td>{{ event.NbInscriptionsMax }}</td>
-{#     Nos nombreux essais :           <td>{{ event.Eventorgenazedby }} <a href="{{ path('app_event_show', {'id': event.eventOrganizedBy.id}) }}"></a>#}
-{#                <td><a href="{{ path('app_event_new', {'id': event.eventorgenazedby}) }}"></a>#}
-{#                <td> {{ event.eventorgenazedby.username }}</td>#}
-{#                <td>{{ event.eventOrganizedBy ? event.eventOrganizedBy.username : 'N/A' }}</td>#}
-{#                <td> {{ app.user.username }}</td>#}
-{#                <td> {{ event.eventorgenazedby }}</td>#}
-
                 {% if event.eventorgenazedby is not null %}
                     <td>{{ event.eventorgenazedby.email }}</td>
                 {% else %}
@@ -182,12 +178,11 @@
 {#        {% else %}#}
 
 {#       MC : la modification ne devrait être accessibles qu'à l'organisateur qui a créé une sortie         #}
-            <td>
-            {% if app.user and event.eventorgenazedby == app.user %}
-                <a href="{{ path('app_event_show', {'id': event.id}) }}">• En savoir plus...</a>
-                <a href="{{ path('app_event_edit', {'id': event.id}) }}">• Modifier</a></td>
-            {% else %}
-                <a href="{{ path('app_event_show', {'id': event.id}) }}">• En savoir plus</a></td>
+                <td>
+                    {% if app.user and event.eventorgenazedby == app.user %}
+                    <a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a>
+                    {% endif %}
+                </td>
 {#                <a href="{{ path('app_subscription', {'eventId': event.id}) }}">• S'inscrire</a>#}
 {#                #}{#  creer un if pour supprimer le bouton se desinscrire si on n'est pas inscrit #}
 {#                <a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">• Se désinscrire</a>#}
@@ -212,7 +207,7 @@
                 {% endif %}
 
 
-            {% endif %}
+            
             </td>
             </tr>
 
