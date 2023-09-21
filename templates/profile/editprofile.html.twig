@@ -9,12 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Mon profil ✅</h1>
-    <h2>Profil de {{ user.username }} </h2>
-    <h3>{{ user.email }}</h3>
+    <h1>Mon profil</h1>
+    <h2>Profil de : {{ user.username }}{{ user.email }} </h2>
 
 
-    <h1>Modifier le profil</h1>
+<span>
+    <h3>Modifier le profil</h3>
 
     {% for label, messages in app.flashes %}
     {% for message in messages %} <div class="alert-{{ label }}"> {{ message }}
