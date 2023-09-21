@@ -9,12 +9,10 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Mon profil</h1>
-    <h2>Profil de : {{ user.username }}{{ user.email }} </h2>
-
+    <h3>Profil de {{ user.username }}{{ user.email }}</h3>
 
 <span>
-    <h3>Modifier le profil</h3>
+    <h4>Modifier le profil</h4>
 
     {% for label, messages in app.flashes %}
     {% for message in messages %} <div class="alert-{{ label }}"> {{ message }}
@@ -48,7 +46,7 @@
         </tr>
         <tr>
             <th>{{ form_label(form.mycampus) }}</th>
-            <td>{{ form_row(form.mycampus) }}</td>
+            <td>{{ form_widget(form.mycampus) }}</td>
         </tr>
 {#        <tr>#}
 {#            <th>{{ form_label(form.password) }}</th>#}

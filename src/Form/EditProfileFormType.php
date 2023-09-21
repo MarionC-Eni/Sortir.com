@@ -14,19 +14,32 @@ class EditProfileFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
-            ->add('firstname')
-            ->add('phone')
-            ->add('email')
+            ->add('username', null, [
+                'label' => 'Nom',
+            ])
+
+            ->add('firstname', null, [
+                'label' => 'Prenom',
+            ])
+
+            ->add('phone', null, [
+                'label' => 'Téléphone',
+            ])
+
+            ->add('email', null, [
+                'label' => 'Email',
+            ])
+
             //->add('password')
             //->add('isAdmin')
             //->add('isRegisteredToEvent')
+
             ->add('pseudo')
-            ->add('mycampus', EntityType::class, [
-               'label' => 'Votre école de rattachement',
-               'class' => Campus::class,
-               'choice_label' => 'name'
+
+            ->add('mycampus', null, [
+                'label' => 'Ecole de rattachement',
             ])
+
             //->add('roles')
             // MC: attention il faudra l'ajouter ->add('schoolsite')
             //  MC: attention il faudra l'ajouter ->add('photo')

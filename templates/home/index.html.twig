@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sorties Eni{% endblock %}
+{% block title %}Par ici la sortie !{% endblock %}
 
 {% block body %}
 
 
 
 <div class="example-wrapper bienvenue-container">
-    <h1>Bienvenue sur le site : Par ici la sortie ! </h1>
+    <h1>Bienvenue sur le site de Par ici la sortie ! </h1>
 </div>
 
     {#  MC: test avec une image avec autres dimensions
 <div class="bg-image bg-size-half bg-position-top">
 <img src="{{ asset('image/festival.jpg') }}" alt="Description de l'image"></div>#}
 
-    <div class="bg-image bg-size-full bg-position-center">
-    <img src="{{ asset('image/concert.jpg') }}" alt="Description de l'image"></div>
+    <div class="bg-image bg-size-cover bg-position-center">
+    <img src="{{ asset('image/fond4.png') }}" alt="bar entre amis" class="fullscreen-image"></div>
 
 {% endblock %}
