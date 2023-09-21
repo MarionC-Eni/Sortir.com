@@ -30,23 +30,29 @@ class EventController extends AbstractController
 //        ]);
 //    }
 
+        $user = $this->getUser();
+
         $searchData = [
             'min_date' => new \DateTime("- 1 month"),
             'max_date' => new \DateTime("+ 1 year"),
 //MC : on ne rajoute pas ici de quoi aller filtrer selon le schooliste
-            'eventorgenazedby' => false,
-            'registered' => false,
-            'not_registered' => false,
-            'past_event' => false,
+//            'eventorgenazedby' => false,
+//            'registered' => false,
+//            'not_registered' => false,
+//            'past_event' => false,
         ];
 
+        // ici on va faire appel à notre formulaire de recherche
         $filterForm = $this->createForm(EventFilterFormType::class, $searchData);
-
         $filterForm->handleRequest($request);
 
         $criteria = [];
+        $events = [];
+//        $formData = $filterForm->getData();
+//        dump($formData);
 
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
+            // ici on récupère les critères de recherche définis dans le repossitory
             $formData = $filterForm->getData();
 
             if ($formData['min_date']) {
@@ -57,23 +63,64 @@ class EventController extends AbstractController
                 $criteria['max_date'] = $formData['max_date'];
             }
 
-            // Add campus filtering criteria
             if ($formData['schoolsite']) {
                 $criteria['schoolsite'] = $formData['schoolsite'];
             }
 
+            //tentative 2
+//            if ($formData['eventorgenazedby'] === true) {
+////                $user = $this->getUser();
+////                $criteria['eventorgenazedby'] = $user;
+//                $criteria['eventorgenazedby'] = true;
+//            }
+
+            //tentative 3
+//            if ($criteria['filtreOption']) {
+//                // Si la case à cocher est cochée, utilisez la méthode de recherche avec filtre
+//                $resultats = $eventRepository->findByCriteria($criteria);
+//            } else {
+//                // Sinon, utilisez la méthode de recherche par critère par défaut
+//                $resultats = $eventRepository->findByCriteria($criteria);
+//            }
+//
+
+//            if ($formData['eventorgenazedby']) {
+//                $events = $eventRepository->findByCriteria($criteria, $user);
+//            } else {
+//                $events = $eventRepository->findByCriteria($criteria);
+//            }
+//
+//            if ($formData['userregistred']) {
+//                $events = $eventRepository->findByCriteria($criteria, $user);
+//            } else {
+//                $events = $eventRepository->findByCriteria($criteria);
+//            }
+
+            if ($formData['eventorgenazedby']) {
+                $criteria['eventorgenazedby'] = $user;
+            }
+
+            if ($formData['userregistred']) {
+                $criteria['userregistred'] = $user;
+            }
+
+// Utilisez le référentiel pour effectuer la recherche
+            if ($formData['eventorgenazedby'] || $formData['userregistred']) {
+                $events = $eventRepository->findByCriteria($criteria, $user);
+            } else {
+                $events = $eventRepository->findByCriteria($criteria);
+            }
+
+
         }
 
-        $events = $eventRepository->findByCriteria($criteria);
+// on affiche le résulstats
+            return $this->render('event/index.html.twig', [
+                'filterForm' => $filterForm->createView(),
+                'events' => $events,
+            ]);
 
-
-        return $this->render('event/index.html.twig', [
-            'filterForm' => $filterForm->createView(),
-            'events' => $events,
-        ]);
     }
-
-
 
 
 

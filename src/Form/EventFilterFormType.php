@@ -54,20 +54,20 @@ class EventFilterFormType extends AbstractType
                 'required' => false,
             ])
 
-            ->add('registered', CheckboxType::class, [
+            ->add('userregistred', CheckboxType::class, [
                 'label' => "Sorties auxquelles je suis inscrit/e",
                 'required' => false,
             ])
-
-            ->add('not_registered', CheckboxType::class, [
-                'label' => "Sorties auxquelles je ne suis pas inscrit/e",
-                'required' => false,
-            ])
-
-            ->add('past_event', CheckboxType::class, [
-                'label' => "Sorties passées",
-                'required' => false,
-            ])
+//
+//            ->add('not_registered', CheckboxType::class, [
+//                'label' => "Sorties auxquelles je ne suis pas inscrit/e",
+//                'required' => false,
+//            ])
+//
+//            ->add('past_event', CheckboxType::class, [
+//                'label' => "Sorties passées",
+//                'required' => false,
+//            ])
 
             ->add('submit', SubmitType::class, ['label' => 'Filtrer'])
 
