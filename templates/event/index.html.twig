@@ -51,10 +51,14 @@
 
 
         {{ form_row(filterForm.eventorgenazedby) }}
+        {{ form_row(filterForm.registered) }}
+        {{ form_row(filterForm.not_registered) }}
+        {{ form_row(filterForm.past_event) }}
 
         {{ form_row(filterForm.submit) }}
         {{ form_end(filterForm) }}
-    </div>
+
+            </div>
 
     <form class="d-flex">
         <input class="form-control me-sm-2" type="search" placeholder="Rechercher">

@@ -33,7 +33,10 @@ class EventController extends AbstractController
             'min_date' => new \DateTime("- 1 month"),
             'max_date' => new \DateTime("+ 1 year"),
 //MC : on ne rajoute pas ici de quoi aller filtrer selon le schooliste
-            'eventorgenazedby' => true,
+            'eventorgenazedby' => false,
+            'registered' => false,
+            'not_registered' => false,
+            'past_event' => false,
         ];
 
         $filterForm = $this->createForm(EventFilterFormType::class, $searchData);

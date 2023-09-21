@@ -25,7 +25,7 @@ class EventFilterFormType extends AbstractType
             ->setMethod('get')
 
             ->add('schoolsite', EntityType::class, [
-                'label' => 'Choisir son campus : ',
+                'label' => 'Campus ',
                 'class' => Campus::class,
                 'choice_label' => 'name',
                 'required' => false,
@@ -39,6 +39,7 @@ class EventFilterFormType extends AbstractType
 //                'attr' => ['class' => 'datepicker'],
                 'format' => 'dd/MM/yyyy'
             ])
+
             ->add('max_date', DateType::class, [
                 'label' => 'et le',
 // MC : à voir si on laisse la possibilité à l'utilisateur de saisir manuellement une date au format texte
@@ -47,9 +48,25 @@ class EventFilterFormType extends AbstractType
                 'format' => 'dd/MM/yyyy'
             ])
 
+
             ->add('eventorgenazedby', CheckboxType::class, [
                 'label' => "Sorties dont je suis l'organisateur/trice",
-                'required' => true,
+                'required' => false,
+            ])
+
+            ->add('registered', CheckboxType::class, [
+                'label' => "Sorties auxquelles je suis inscrit/e",
+                'required' => false,
+            ])
+
+            ->add('not_registered', CheckboxType::class, [
+                'label' => "Sorties auxquelles je ne suis pas inscrit/e",
+                'required' => false,
+            ])
+
+            ->add('past_event', CheckboxType::class, [
+                'label' => "Sorties passées",
+                'required' => false,
             ])
 
             ->add('submit', SubmitType::class, ['label' => 'Filtrer'])
@@ -84,5 +101,9 @@ class EventFilterFormType extends AbstractType
             'data_class' => null, // Allow array as view data
         ]);
 
+    }
+
+    private function createFormBuilder($searchData)
+    {
     }
 }
