@@ -37,10 +37,12 @@
 
 .bienvenue-container {
     width: 100%; /* Largeur de l'élément à 100% pour occuper toute la largeur de la page */
-    height: 100vh; /* Hauteur de l'élément à 100% de la hauteur de la vue (viewport) */
+    height: 60vh; /* Hauteur de l'élément à 100% de la hauteur de la vue (viewport) */
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: ghostwhite;
 }
 
 /*.text-padding {*/

@@ -31,25 +31,22 @@ class EventController extends AbstractController
 //    }
 
         $user = $this->getUser();
+        $searchData = [];
 
-        $searchData = [
-            'min_date' => new \DateTime("- 1 month"),
-            'max_date' => new \DateTime("+ 1 year"),
-//MC : on ne rajoute pas ici de quoi aller filtrer selon le schooliste
-//            'eventorgenazedby' => false,
-//            'registered' => false,
-//            'not_registered' => false,
-//            'past_event' => false,
-        ];
+//        $searchData = [
+//            'min_date' => new \DateTime("- 100 month"),
+//            'max_date' => new \DateTime("+ 1 year"),
+//        ];
 
         // ici on va faire appel à notre formulaire de recherche
         $filterForm = $this->createForm(EventFilterFormType::class, $searchData);
         $filterForm->handleRequest($request);
 
         $criteria = [];
-        $events = [];
+        $events = $eventRepository->findAll();
 //        $formData = $filterForm->getData();
 //        dump($formData);
+
 
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             // ici on récupère les critères de recherche définis dans le repossitory
@@ -66,6 +63,13 @@ class EventController extends AbstractController
             if ($formData['schoolsite']) {
                 $criteria['schoolsite'] = $formData['schoolsite'];
             }
+
+            // tentative 6 : je rajoute :
+//            if ($formData['eventorgenazedby']) {
+//                if ($user instanceof User) {
+//                    $criteria['eventorgenazedby'] = $user;
+//                }
+//            }
 
             //tentative 2
 //            if ($formData['eventorgenazedby'] === true) {
@@ -96,6 +100,23 @@ class EventController extends AbstractController
 //                $events = $eventRepository->findByCriteria($criteria);
 //            }
 
+//            //ce code là fonctionne jusqu'à ligne    $events = $eventRepository->findByCriteria($criteria);
+//            if ($formData['eventorgenazedby']) {
+//                $criteria['eventorgenazedby'] = $user;
+//            }
+//
+//            if ($formData['userregistred']) {
+//                $criteria['userregistred'] = $user;
+//            }
+//
+//// Utilisez le référentiel pour effectuer la recherche
+//            if ($formData['eventorgenazedby'] || $formData['userregistred']) {
+//                $events = $eventRepository->findByCriteria($criteria, $user);
+//            } else {
+//                $events = $eventRepository->findByCriteria($criteria);
+//            }
+//        }
+
             if ($formData['eventorgenazedby']) {
                 $criteria['eventorgenazedby'] = $user;
             }
@@ -104,15 +125,21 @@ class EventController extends AbstractController
                 $criteria['userregistred'] = $user;
             }
 
+            if ($formData['not_registered']) {
+                $criteria['not_registered'] = $user;
+            }
+
+
 // Utilisez le référentiel pour effectuer la recherche
-            if ($formData['eventorgenazedby'] || $formData['userregistred']) {
+            if ($formData['eventorgenazedby'] || $formData['userregistred'] || $formData['not_registered']) {
                 $events = $eventRepository->findByCriteria($criteria, $user);
             } else {
                 $events = $eventRepository->findByCriteria($criteria);
             }
-
-
         }
+
+
+
 
 // on affiche le résulstats
             return $this->render('event/index.html.twig', [
@@ -120,7 +147,7 @@ class EventController extends AbstractController
                 'events' => $events,
             ]);
 
-    }
+        }
 
 
 
