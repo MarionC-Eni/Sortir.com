@@ -3,7 +3,7 @@
 {% block title %}Event{% endblock %}
 
 {% block body %}
-    <h1>Le détail de ma sortie</h1>
+    <h1 class="text-center">détail de la sortie : {{ event.name }}</h1>
 
     {% for label, messages in app.flashes %}
         {% for message in messages %} <div class="alert-{{ label }}"> {{ message |raw }}
@@ -81,25 +81,18 @@
     </table>
 
 
-
+    <div class="container-fluid" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
     {% if app.user and event.eventorgenazedby == app.user %}
-<ul>
-    <li><a href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a></li>
-    {{ include('event/_delete_form.html.twig') }}
-
-</ul>
-
+        
+            <li><a class="btn btn-info" href="{{ path('app_event_edit', {'id': event.id}) }}">Modifier</a></li>
+                {{ include('event/_delete_form.html.twig') }}
     {% else %}
-<ul>
-<li><a href="{{ path('app_event_index') }}">Retour aux sorties</a></li>
-<li><a href="{{ path('app_subscription', {'eventId': event.id}) }}">S'inscrire</a></li>
-        {#  creer un if pour supprimer le bouton se desinscrire si on n'est pas inscrit #}
-        {#<li> <a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">Se désinscrire</a></li>#}
-    
-</ul>
+
+            <li><a class="btn btn-info" href="{{ path('app_event_index') }}">Retour aux sorties</a></li>
+
     {% endif %}
-
-
-{#    MC: à voir qui peut supprimer un event : l'admin ou l'organisateur ? différencier annuler et supprimer#}  
+        </ul>
+    </div>
     {% endblock %}
 

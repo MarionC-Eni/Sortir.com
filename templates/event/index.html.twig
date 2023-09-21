@@ -166,7 +166,7 @@
                     <td>Pas encore publié</td>
                 {% endif %}
 
-            </tr>
+           
 
 {#                <td>#}
 {#                   MC: test 1 la modification ne devrait être accessibles qu'à l'organisateur qui a créé une sortie#}
@@ -180,14 +180,14 @@
 {#            </tr>#}
 {#            #}
 {#        {% else %}#}
-            <tr>
-            <td>
+
 {#       MC : la modification ne devrait être accessibles qu'à l'organisateur qui a créé une sortie         #}
+            <td>
             {% if app.user and event.eventorgenazedby == app.user %}
                 <a href="{{ path('app_event_show', {'id': event.id}) }}">• En savoir plus...</a>
-                <a href="{{ path('app_event_edit', {'id': event.id}) }}">• Modifier</a>
+                <a href="{{ path('app_event_edit', {'id': event.id}) }}">• Modifier</a></td>
             {% else %}
-                <a href="{{ path('app_event_show', {'id': event.id}) }}">• En savoir plus</a>
+                <a href="{{ path('app_event_show', {'id': event.id}) }}">• En savoir plus</a></td>
 {#                <a href="{{ path('app_subscription', {'eventId': event.id}) }}">• S'inscrire</a>#}
 {#                #}{#  creer un if pour supprimer le bouton se desinscrire si on n'est pas inscrit #}
 {#                <a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">• Se désinscrire</a>#}
@@ -197,7 +197,7 @@
 {#                {% else %}#}
 {#                    <li><a href="{{ path('app_subscription', {'eventId': event.id}) }}">S'inscrire</a></li>#}
 {#                {% endif %}#}
-
+                <td>
                 {% set isUserRegistered = false %}
                 {% for registeredUser in event.userregistred %}
                     {% if registeredUser == app.user %}
@@ -206,23 +206,22 @@
                 {% endfor %}
 
                 {% if isUserRegistered %}
-                    <li><a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">Se désinscrire</a></li>
+                    <a href="{{ path('app_unsubscription', {'eventId': event.id}) }}">Se désinscrire</a>
                 {% else %}
-                    <li><a href="{{ path('app_subscription', {'eventId': event.id}) }}">S'inscrire</a></li>
+                    <a href="{{ path('app_subscription', {'eventId': event.id}) }}">S'inscrire</a>
                 {% endif %}
 
 
             {% endif %}
-
-
-
-
             </td>
             </tr>
 
 
+            
+
+
             <tr>
-                <td colspan="10">--</td>
+                <td colspan="50">--</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -231,7 +230,7 @@
 
 </div>
 
-    <div class="container">
+    <div class="container" style="text-align: center;">
     <a href="{{ path('app_event_new') }}" class="custom-link" >Créer une sortie</a>
     </div>
     <br>
