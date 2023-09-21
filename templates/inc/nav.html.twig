@@ -1,9 +1,15 @@
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+
+<nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
+
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ path('app_home') }}">Accueil</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="{{ path('app_home') }}">
+                <img src="{{ asset('image/eni-nav.svg') }}" width="80" height="80" alt="">
+            </a>
+            <a class="btn btn-info" href="{{ path('app_home') }}">Accueil</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
+            </button>
+
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
@@ -11,55 +17,41 @@
                         <span class="visually-hidden"></span>
                     </a>
                 </li>
+
             {# MC: la bouton se deconnecter n'est visible que si on est connecte#}
                 {% if app.user %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        <a class="btn btn-info my-4 my-sm-0" href="{{ path('app_show_profile') }}">Gérer mon profil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_show_profile') }}">Gérer mon profil</a>
+                        <a class="btn btn-info my-4 my-sm-0" href="{{ path('app_event_new') }}">Ajouter un nouvel évènement</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_event_new') }}">Ajouter un nouvel évènement</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_event_index') }}">Liste des sorties</a>
+                        <a class="btn btn-info my-4 my-sm-0" href="{{ path('app_event_index') }}">Liste des sorties</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                        <a class="btn btn-info my-4 my-sm-0" href="{{ path('app_login') }}">Se connecter</a>
                     </li>
                 {% endif %}
+
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_register') }}">Inscrire un élève</a>
+                        <a class="btn btn-info my-2 my-sm-0" href="{{ path('app_register') }}">Inscrire un élève</a>
                      </li>
                 {% endif %}
-                
 
-{#        MC: tentatuve pour ajouter les role
-{% if is_granted("ROLE_ADMIN") %}#}
-
-{# MC:je cache ça pour qu'on s'y retrouve
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_user_new') }}">Créer son compte</a>
-                </li>
-
-#}
-
-                {# MC: app_register sera uniquement visible par l'admin quand on aura géré les droits... #}
-
+                {% if app.user %}
+                    <ul class="navbar-nav d-flex flex-row me-1">
+                        <li class="nav-item me-3 me-lg-0">
+                        
+                            <a class="btn btn-danger my-2 my-sm-0 " href="{{ path('app_logout') }}">Se déconnecter</a>
+                         
+                        </li>
+                     </ul>
+                {% endif %}
 
             </ul>
-
-{#            // MC: je supprime ça pour le moment de la barre de recherche :#}
-
-{#            <form class="d-flex">#}
-{#                <input class="form-control me-sm-2" type="search" placeholder="Search">#}
-{#                <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>#}
-{#            </form>#}
-
         </div>
     </div>
 </nav>
