@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\State;
 use App\Entity\Campus;
+use App\Entity\City;
 use App\Form\EventType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,9 @@ use Symfony\Component\Security\Core\Security;
 use App\Service\EventStateService\EventStateService;
 use App\Repository\EventRepository;
 use App\Repository\LocationRepository;
+use Symfony\Component\Form\DataTransformerInterface;
+use App\Form\EditeCityType;
+use App\Repository\CityRepository;
 
 
 class AdminController extends AbstractController
@@ -32,15 +36,16 @@ class AdminController extends AbstractController
 
 
     #[Route('/admin/ville', name: 'app_admin_ville')]
-    public function gestionville(LocationRepository $LocationRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function gestionville(CityRepository $cityRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        
-        $form = $this->createForm(EventType::class, $Location);//mettre LocationType a la place de Eventtype quand ca sera créé
+        $city = $cityRepository->findAll();
+        //dd($city);
+       // $form = $this->createForm(EditeCityType::class, $city);//mettre LocationType a la place de Eventtype quand ca sera créé
         //$form->handleRequest($request);
 
         return $this->render('admin/ville.html.twig', [
-            //'event' => $event,
-            'form' => $form,
+            //'form' => $form->createView(),
+            'city' => $city,
         ]);
     }
 }
