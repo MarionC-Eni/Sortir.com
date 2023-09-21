@@ -18,16 +18,26 @@
                     <li class="nav-item">
                         <a class="btn btn-warning my-4 my-sm-0" href="{{ path('app_event_index') }}">Liste des sorties</a>
                     </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="btn btn-warning my-4 my-sm-0" href="{{ path('app_login') }}">Se connecter</a>
-                    </li>
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="btn btn-warning my-2 my-sm-0" href="{{ path('app_register') }}">Inscrire un élève</a>
+                  <div class="dropdown">
+                        <button class="btn btn-danger  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        administration
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                        <a class="btn btn-warning" href="{{ path('app_register') }}">Inscrire un élève</a>
                     </li>
+                        <li>
+                            <a class="btn btn-warning " href="#">gestion ville et campus</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-warning" href="#">gestion evenement</a>
+                        </li>
+                        </ul>
+                    </div>
+
                 {% endif %}
             </ul>
         </div>
@@ -38,6 +48,10 @@
                 {% if app.user %}
                     <li class="nav-item">
                         <a class="btn btn-danger my-2 my-sm-0" href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-info my-4 my-sm-0" href="{{ path('app_login') }}">Se connecter</a>
                     </li>
                 {% endif %}
             </ul>
