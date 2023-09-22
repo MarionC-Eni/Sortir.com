@@ -3,8 +3,19 @@
 {% block title %}admin/ville{% endblock %}
 
 {% block body %}
-{{ dump(city) }}
+
 <div class="example-wrapper">
     <h1>admin/ville</h1>
+    {{ form_start(EditeCityType) }}
+
+    {{ form_label(EditeCityType.name) }}
+    {{ form_widget(EditeCityType.name) }}
+
+    {{ form_label(EditeCityType.zipCode) }}    
+   {{ form_widget(EditeCityType.zipCode) }}
+{{ form_end(EditeCityType) }}
+ <form method="POST" action="{{ path('app_admin_new_city') }}">
+        <button type="submit" class="btn btn-primary">Enregister une nouvelle ville</button>
+    </form>
 </div>
 {% endblock %}

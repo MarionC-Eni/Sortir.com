@@ -15,7 +15,7 @@ class City
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $idCity = null;
 
     #[ORM\Column(length: 255)]

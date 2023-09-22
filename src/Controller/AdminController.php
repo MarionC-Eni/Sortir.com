@@ -25,27 +25,58 @@ use App\Repository\CityRepository;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin', name: 'app_admin')]
-    public function index(): Response
+    // #[Route('/admin/index/city', name: 'app_admin_city_index', methods: ['GET'])]
+
+    // public function index(CityRepository $cityRepository): Response
+    // {
+    //     return $this->render('admin/index.html.twig', [
+    //         'cities' => $cityRepository->findAll(),
+    //     ]);
+    // }
+
+
+    #[Route('/admin/new/city', name: 'app_admin_new_city', methods: ['GET', 'POST'])]
+    public function newcity (CityRepository $cityRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-
-
-
-    #[Route('/admin/ville', name: 'app_admin_ville')]
-    public function gestionville(CityRepository $cityRepository, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $city = $cityRepository->findAll();
+        $city = new City();
+        //$city = $cityRepository->findAll();
         //dd($city);
-       // $form = $this->createForm(EditeCityType::class, $city);//mettre LocationType a la place de Eventtype quand ca sera créé
-        //$form->handleRequest($request);
+        $form = $this->createForm(EditeCityType::class, $city);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Si le formulaire est soumis et valide, enregistrez les modifications dans la base de données
+            $entityManager->persist($city);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_admin_new_city', [], Response::HTTP_SEE_OTHER);
+        }
 
         return $this->render('admin/ville.html.twig', [
-            //'form' => $form->createView(),
+            'EditeCityType' => $form->createView(),
             'city' => $city,
         ]);
     }
+
+
+    // #[Route('/admin/edit/city', name: 'app_admin_edit_city', methods: ['GET', 'POST'])]
+    // public function editcity (CityRepository $cityRepository, Request $request, EntityManagerInterface $entityManager): Response
+    // {
+
+    //     $city = $cityRepository->findAll();
+    //     //dd($city);
+       
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         // Si le formulaire est soumis et valide, enregistrez les modifications dans la base de données
+    //         $entityManager->persist($city);
+    //         $entityManager->flush($city);
+
+    //         return $this->redirectToRoute('app_admin', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->render('admin/ville.html.twig', [
+    //         'form' => $form->createView(),
+    //         'city' => $city,
+    //     ]);
+    // }
 }
